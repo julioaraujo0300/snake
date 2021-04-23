@@ -26,8 +26,13 @@ export default class Snake{
     }
 
     placeApple(){
-        this.apple.x = Math.floor(Math.random() * this.scene.game.config.width / this.tileSize) * this.tileSize;
-        this.apple.y = Math.floor(Math.random() * this.scene.game.config.height / this.tileSize) * this.tileSize;
+        let appleX = Math.floor(Math.random() * this.scene.game.config.width / this.tileSize) * this.tileSize;
+        let appleY = Math.floor(Math.random() * this.scene.game.config.height / this.tileSize) * this.tileSize;
+        // for (i = 0; i > this.body.length; i++){
+        //     if(this.body[i].x !<= appleX &&)
+        // }
+        this.apple.x = appleX;
+        this.apple.y = appleY;
     }
 
     keydown(event) {
