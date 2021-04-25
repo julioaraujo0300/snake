@@ -1,8 +1,8 @@
 import MainScene from "./mainscene.js"
 
 const config = {
-    width: 160,
-    height: 160,
+    width: 320,
+    height: 320,
     type: Phaser.auto,
     parent: 'game-canvas',
     scene: [MainScene]

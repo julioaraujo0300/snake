@@ -8,15 +8,22 @@ export default class Snake{
 
         this.direction = Phaser.Math.Vector2.DOWN;
         this.body = [];
+        this.color = [];
+
+        this.color.push(0x002654);
+        this.color.push(0x54bd04);
+        this.color.push(0xff08d2);
+        this.color.push(0xf6ff00);
+        this.color.push(0xff9500);
         
         this.body.push(
             this.scene.add
-            .rectangle(this.scene.game.config.width / 2, this.scene.game.config.height / 2, 16, 16, 0xff0000).setOrigin(0)
+            .rectangle(this.scene.game.config.width / 2, this.scene.game.config.height / 2, 16, 16, 0x40ff00).setOrigin(0)
         );
 
         this.apple = this.scene.add
             .rectangle(32, 32,
-                this.tileSize, this.tileSize, 0x00ff00).setOrigin(0);
+                this.tileSize, this.tileSize, 0xff0d00).setOrigin(0);
 
         this.placeApple();
 
@@ -25,14 +32,28 @@ export default class Snake{
         })
     }
 
+
+    writeOutput(text){
+        document.write(`<h2>${text}</h2>`)
+    }
+
+
     placeApple(){
-        let appleX = Math.floor(Math.random() * this.scene.game.config.width / this.tileSize) * this.tileSize;
-        let appleY = Math.floor(Math.random() * this.scene.game.config.height / this.tileSize) * this.tileSize;
-        // for (i = 0; i > this.body.length; i++){
-        //     if(this.body[i].x !<= appleX &&)
-        // }
-        this.apple.x = appleX;
-        this.apple.y = appleY;
+        // console.log("function called");
+        this.appleX = Math.floor(Math.random() * this.scene.game.config.width / this.tileSize) * this.tileSize;
+        this.appleY = Math.floor(Math.random() * this.scene.game.config.height / this.tileSize) * this.tileSize;
+        this.checkForBug();
+        this.apple.x = this.appleX;
+        this.apple.y = this.appleY;
+    }
+
+    checkForBug(){
+        for (let i = 0; i < this.body.length; i++){
+            if(this.body[i].x == this.appleX && this.body[i].y == this.appleY){
+                console.log("bug happened");
+                this.placeApple();
+            }
+        }
     }
 
     keydown(event) {
@@ -72,9 +93,13 @@ export default class Snake{
     checkApple(x, y){
         if(this.apple.x === x && this.apple.y === y) {
             this.placeApple();
+            let randomColor = Math.floor(Math.random() * this.color.length);
             this.body.push(
-                this.scene.add.rectangle(0,0,this.tileSize,this.tileSize,0xffffff).setOrigin(0)
+                this.scene.add.rectangle(0,0,this.tileSize,this.tileSize,this.color[randomColor]).setOrigin(0)
             );
+            if(this.moveInterval >= 160){
+                this.moveInterval -= 20;
+            }
         }
     }
 
